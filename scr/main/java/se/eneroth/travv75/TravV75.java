@@ -48,59 +48,59 @@ public class TravV75 {
         doc.appendChild(rootElement);
         rootElement.setAttribute("xmlns:xsi", "http://www.w3.org/2001/XMLSchema-instance");
         rootElement.setAttribute("xsi:noNamespaceSchemaLocation", "http://webservice.atg.se/schemas/atg_filebetting.xsd");
-        rootElement.setAttribute("company","Eneroth Trav");
-        rootElement.setAttribute("product","V75-generator");
-        rootElement.setAttribute("version","0.9");
-        rootElement.setAttribute("createddate", new Date().toString());
-        rootElement.setAttribute("createdtime", new Date().toString());
         rootElement.setAttribute("schemaversion","ATG File Betting XSD ver 1.8");
 
-        Element coupon = doc.createElement("v75Coupon");
-        rootElement.appendChild(coupon);
-        coupon.setAttribute("couponid", "1");
-        coupon.setAttribute("date", prop.getProperty("Datum"));
-        coupon.setAttribute("betmultiplier", "1");
-        coupon.setAttribute("v7", "1");
+        Element betcoupons = doc.createElement("betcoupons");
+        rootElement.appendChild(betcoupons);
+        int antalRader = Integer.parseInt(prop.getProperty("AntalRader"));
+        for (int i = 1; i <= antalRader; i++) {
 
-        Element leg1 = doc.createElement("leg");
-        coupon.appendChild(leg1);
-        leg1.setAttribute("legno", "1");
-        leg1.setAttribute("marks", "100000000000000");
+            Element coupon = doc.createElement("v75Coupon");
+            betcoupons.appendChild(coupon);
+            coupon.setAttribute("couponid", "" + i);
+            coupon.setAttribute("date", prop.getProperty("Datum"));
+            coupon.setAttribute("betmultiplier", "1");
 
-        Element leg2 = doc.createElement("leg");
-        coupon.appendChild(leg2);
-        leg2.setAttribute("legno", "2");
-        leg2.setAttribute("marks", "010000000000000");
+            Element leg1 = doc.createElement("leg");
+            coupon.appendChild(leg1);
+            leg1.setAttribute("legno", "1");
+            leg1.setAttribute("marks", "000000010000000");
 
-        Element leg3 = doc.createElement("leg");
-        coupon.appendChild(leg3);
-        leg3.setAttribute("legno", "3");
-        leg3.setAttribute("marks", "001000000000000");
+            Element leg2 = doc.createElement("leg");
+            coupon.appendChild(leg2);
+            leg2.setAttribute("legno", "2");
+            leg2.setAttribute("marks", "001000000000000");
 
-        Element leg4 = doc.createElement("leg");
-        coupon.appendChild(leg4);
-        leg4.setAttribute("legno", "4");
-        leg4.setAttribute("marks", "000100000000000");
+            Element leg3 = doc.createElement("leg");
+            coupon.appendChild(leg3);
+            leg3.setAttribute("legno", "3");
+            leg3.setAttribute("marks", "000000000100000");
 
-        Element leg5 = doc.createElement("leg");
-        coupon.appendChild(leg5);
-        leg5.setAttribute("legno", "5");
-        leg5.setAttribute("marks", "000010000000000");
+            Element leg4 = doc.createElement("leg");
+            coupon.appendChild(leg4);
+            leg4.setAttribute("legno", "4");
+            leg4.setAttribute("marks", "000100000000000");
 
-        Element leg6 = doc.createElement("leg");
-        coupon.appendChild(leg6);
-        leg6.setAttribute("legno", "6");
-        leg6.setAttribute("marks", "000001000000000");
+            Element leg5 = doc.createElement("leg");
+            coupon.appendChild(leg5);
+            leg5.setAttribute("legno", "5");
+            leg5.setAttribute("marks", "010000000000000");
 
-        Element leg7 = doc.createElement("leg");
-        coupon.appendChild(leg7);
-        leg7.setAttribute("legno", "7");
-        leg7.setAttribute("marks", "000000100000000");
+            Element leg6 = doc.createElement("leg");
+            coupon.appendChild(leg6);
+            leg6.setAttribute("legno", "6");
+            leg6.setAttribute("marks", "001000000000000");
+
+            Element leg7 = doc.createElement("leg");
+            coupon.appendChild(leg7);
+            leg7.setAttribute("legno", "7");
+            leg7.setAttribute("marks", "000000000001000");
+        }
 
         TransformerFactory transformerFactory = TransformerFactory.newInstance();
         Transformer transformer = transformerFactory.newTransformer();
         DOMSource source = new DOMSource(doc);
-        StreamResult result = new StreamResult(new File("C:\\projekt\\TravV75\\out\\v75.xml"));
+        StreamResult result = new StreamResult(new File("C:\\projekt\\TravV75\\out\\v75_" + prop.getProperty("Datum") + ".xml"));
 
         // Output to console for testing
         // StreamResult result = new StreamResult(System.out);
